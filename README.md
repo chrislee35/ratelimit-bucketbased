@@ -4,8 +4,8 @@ This is a very simple rate limiting gem useful for regulating the speed at which
 
 To track the rates of various transactions Memory, MySQL, SQLite3, MemCache, and Redis storage options are supported, but the appropriateness of one over another for various workloads is an exercise left to the reader. I have not added any crafty speed-ups for the SQL databases (e.g., dynamically sized bloom filters), so use those primarily for durability and scalability, not high transaction rates.  Probably the only solution that can scale in the number of items it can track, handle high-transaction loads, and have some durability is Redis.  (it's too bad that MemCache can't save to disk)
 
-Tested in ruby-1.8.7-p371, ruby-1.9.3-p392, and ruby-2.0.0-p0
-The Memcache gem fails to compile in ruby-2.0.0
+Tested in ruby-1.8.7-p371, ruby-1.9.3-p392, and ruby-2.0.0-p0.
+The Memcache gem fails to compile in ruby-2.0.
 
 ### The Concept
 
