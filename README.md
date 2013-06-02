@@ -55,60 +55,60 @@ The steps to use the rate limiter are the following:
 
 For each of the examples below, use the following template:
 
-  require 'ratelimit-bucketbased'
+	require 'ratelimit-bucketbased'
 
-  # set up the configs
-  start = max = 10
-  min = -10
-  cost = refill_amount = refill_epoch = 2
-  configs = { 
-    'default' => RateLimit::Config.new('default', start, max, min, cost, refill_amount, refill_epoch),
-    'power' => RateLimit::Config.new('default', 20, 20, min, cost, refill_amount, 1)
-  }
+	# set up the configs
+	start = max = 10
+	min = -10
+	cost = refill_amount = refill_epoch = 2
+	configs = { 
+	  'default' => RateLimit::Config.new('default', start, max, min, cost, refill_amount, refill_epoch),
+	  'power' => RateLimit::Config.new('default', 20, 20, min, cost, refill_amount, 1)
+	}
 
-  # create a store
-  *storage creation code here, see sub-sections below*
+	# create a store
+	*storage creation code here, see sub-sections below*
 
-  # create the rate limiter, setting the storage, the configurations, and the name of the default configuration
-  rl = RateLimit::BucketBased.new(storage, configs, 'default')
-  # add a bucket named "admin", using a non-default configuration
-  rl.create_bucket('admin', 'power')
+	# create the rate limiter, setting the storage, the configurations, and the name of the default configuration
+	rl = RateLimit::BucketBased.new(storage, configs, 'default')
+	# add a bucket named "admin", using a non-default configuration
+	rl.create_bucket('admin', 'power')
 
-  def provide_service(username)
-    if rl.use(username)
-      // perform service
-    end
-  end
+	def provide_service(username)
+	  if rl.use(username)
+	    // perform service
+	  end
+	end
 
 ### Memory-based Store
 
-  # create a Memory-based storage
-  storage = RateLimit::Memory.new
+	# create a Memory-based storage
+	storage = RateLimit::Memory.new
 
 ### SQLite3-based Store
 
-  require 'sqlite3'
+	require 'sqlite3'
 
-  # attach to a SQLite3-based storage
-  dbh = SQLite3::Database.new( "test/test.db" )
-  custom_fields = ["username","credits","max_credits","min_credits","cost_per_transaction","refill_credits","refill_seconds","last_refill_time","total_used_credits"]
-  storage = RateLimit::SQLite3.new(dbh,'users_table',custom_fields)
+	# attach to a SQLite3-based storage
+	dbh = SQLite3::Database.new( "test/test.db" )
+	custom_fields = ["username","credits","max_credits","min_credits","cost_per_transaction","refill_credits","refill_seconds","last_refill_time","total_used_credits"]
+	storage = RateLimit::SQLite3.new(dbh,'users_table',custom_fields)
 
 ### Memcache-based Store
 
-  require 'memcache'
+	require 'memcache'
 
-  # create a MemCache-based storage
-  memcache = Memcache.new(:server => 'localhost:11211')
-  storage = RateLimit::Memcache.new(memcache)
+	# create a MemCache-based storage
+	memcache = Memcache.new(:server => 'localhost:11211')
+	storage = RateLimit::Memcache.new(memcache)
 
 ### Redis-based Store
 
-  require 'redis'
+	require 'redis'
 
-  # create a Redis-based storage
-  redis = Redis.new(:server => 'localhost', :port => 6379)
-  storage = RateLimit::Redis.new(redis)
+	# create a Redis-based storage
+	redis = Redis.new(:server => 'localhost', :port => 6379)
+	storage = RateLimit::Redis.new(redis)
 
 ## Contributing
 
