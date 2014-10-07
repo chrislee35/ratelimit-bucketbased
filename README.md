@@ -55,7 +55,7 @@ The steps to use the rate limiter are the following:
 
 For each of the examples below, use the following template:
 
-	require 'ratelimit-bucketbased'
+	require 'ratelimit/bucketbased'
 
 	# set up the configs
 	start = max = 10
